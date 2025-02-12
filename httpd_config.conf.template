@@ -118,7 +118,7 @@ extprocessor lsphp {
   env                     PHP_LSAPI_CHILDREN=10
   env                     LSAPI_AVOID_FORK=200M
   env                     LSPHP_ENABLE_USER_INI=on
-  env                     WORDPRESS_DB_HOST=$WP_DB_HOST
+  env                     WORDPRESS_DB_HOST=db
   env                     WORDPRESS_DB_NAME=$WP_DB_NAME
   env                     WORDPRESS_DB_USER=$WP_DB_USER
   env                     WORDPRESS_DB_PASSWORD=$WP_DB_PASSWORD
