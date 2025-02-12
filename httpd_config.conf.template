@@ -212,8 +212,8 @@ privateExpireInSeconds 3600
 }
 
 virtualhost localhost {
-  vhRoot                  /var/www/vhosts/$VH_NAME/
-  configFile              $SERVER_ROOT/conf/vhosts/$VH_NAME/vhconf.conf
+  vhRoot                  /var/www/vhosts/localhost/
+  configFile              $SERVER_ROOT/conf/vhosts/localhost/vhconf.conf
   note                    Instantiated from template docker
   allowSymbolLink         1
   enableScript            1
