@@ -6,9 +6,9 @@ services:
       - "127.0.0.1:3381:3306"
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: b7HSuC5tJmF3haEDLpGMjn
+      MYSQL_DATABASE: ${WP_DB_NAME}
+      MYSQL_USER: ${WP_DB_USER}
+      MYSQL_PASSWORD: ${WP_DB_PASSWORD}
     command: --disable-log-bin
     volumes:
       - ./db:/var/lib/mysql
@@ -20,10 +20,10 @@ services:
     platform: linux/amd64
     container_name: fpik-ols
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: wpuser
-      WORDPRESS_DB_PASSWORD: b7HSuC5tJmF3haEDLpGMjn
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: ${WP_DB_HOST}
+      WORDPRESS_DB_USER: ${WP_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WP_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WP_DB_NAME}
     ports:
       - "127.0.0.1:81:80"       # HTTP
       - "127.0.0.1:8143:443"      # HTTPS

@@ -8,3 +8,4 @@ wordpress/wp-content/themes/*/*
 wordpress/wp-content/plugins/*/*
 wordpress/wp-content/uploads/*/*
 redis/*
+.env
