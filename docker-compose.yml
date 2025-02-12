@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8.0
-    container_name: fpik-db
+    container_name: ${PROJECT_NAME}-db
     ports:
       - "127.0.0.1:3381:3306"
     environment:
@@ -13,17 +13,12 @@ services:
     volumes:
       - ./db:/var/lib/mysql
     networks:
-      - fpik-bridge
+      - ${PROJECT_NAME}-bridge
 
   ols:
     image: litespeedtech/openlitespeed:latest
     platform: linux/amd64
-    container_name: fpik-ols
-    environment:
-      WORDPRESS_DB_HOST: ${WP_DB_HOST}
-      WORDPRESS_DB_USER: ${WP_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${WP_DB_PASSWORD}
-      WORDPRESS_DB_NAME: ${WP_DB_NAME}
+    container_name: ${PROJECT_NAME}-ols
     ports:
       - "127.0.0.1:81:80"       # HTTP
       - "127.0.0.1:8143:443"      # HTTPS
@@ -35,27 +30,27 @@ services:
     depends_on:
       - db
     networks:
-      - fpik-bridge
+      - ${PROJECT_NAME}-bridge
 
   redis:
     image: redis:latest
-    container_name: fpik-redis
+    container_name: ${PROJECT_NAME}-redis
     ports:
       - "127.0.0.1:6381:6379"
     command: redis-server --save 60 1 --loglevel warning
     volumes:
       - ./redis:/data
     networks:
-      - fpik-bridge
+      - ${PROJECT_NAME}-bridge
 
   adminer:
     image: adminer
-    container_name: fpik-adminer
+    container_name: ${PROJECT_NAME}-adminer
     restart: always
     ports:
       - 127.0.0.1:8981:8080
     networks:
-      - fpik-bridge
+      - ${PROJECT_NAME}-bridge
 
 networks:
   fpik-bridge:

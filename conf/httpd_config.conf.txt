@@ -189,22 +189,32 @@ nodeDefaults  {
 
 module cache {
     param <<<MY_END
-checkprivatecache 1
+heckprivatecache 1
 checkpubliccache 1
 maxcacheobjsize 10000000
-maxstaleage 86400
+maxstaleage 200
+qscache 1
+reqcookiecache 1
+respcookiecache 1
+ignorereqcachectrl 1
+ignorerespcachectrl 0
 enablecache 0
-expireinseconds 86400
+expireinseconds 3600
 enableprivatecache 0
 privateexpireinseconds 3600
     MY_END
     internal 1
-    unknownkeywords checkprivatecache 1
+    unknownkeywords heckprivatecache 1
     unknownkeywords checkpubliccache 1
     unknownkeywords maxcacheobjsize 10000000
-    unknownkeywords maxstaleage 86400
+    unknownkeywords maxstaleage 200
+    unknownkeywords qscache 1
+    unknownkeywords reqcookiecache 1
+    unknownkeywords respcookiecache 1
+    unknownkeywords ignorereqcachectrl 1
+    unknownkeywords ignorerespcachectrl 0
     unknownkeywords enablecache 0
-    unknownkeywords expireinseconds 86400
+    unknownkeywords expireinseconds 3600
     unknownkeywords enableprivatecache 0
     unknownkeywords privateexpireinseconds 3600
     ls_enabled 1

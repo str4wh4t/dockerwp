@@ -1,22 +1,27 @@
 chrootmode 0
 enablescript 1
-vhroot $SERVER_ROOT/$VH_NAME/
+configfile $SERVER_ROOT/conf/vhosts/$VH_NAME/vhconf.conf
 setuidmode 0
 restrained 1
 allowsymbollink 1
-configfile $SERVER_ROOT/conf/vhosts/$VH_NAME/vhconf.conf
+vhroot $SERVER_ROOT/$VH_NAME/
 
 virtualhostconfig  {
     enablegzip 1
     docroot $VH_ROOT/html/
 
-    expires  {
-        expiresdefault 
-        enableexpires 1
+    rewrite  {
+        enable 0
+        loglevel 0
     }
 
     general  {
         enablecontextac 0
+    }
+
+    expires  {
+        expiresdefault 
+        enableexpires 1
     }
 
     index  {
@@ -26,18 +31,13 @@ virtualhostconfig  {
         autoindexuri /_autoindex/default.php
     }
 
-    rewrite  {
-        enable 0
-        loglevel 0
-    }
-
     hotlinkctrl  {
-        suffixes gif, jpeg, jpg
         allowdirectaccess 1
         redirecturi 
         onlyself 1
-        allowedhosts 
         enablehotlinkctrl 0
+        suffixes gif, jpeg, jpg
+        allowedhosts 
     }
 
     accesslog $SERVER_ROOT/logs/$VH_NAME.access.log {

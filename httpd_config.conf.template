@@ -118,10 +118,10 @@ extprocessor lsphp {
   env                     PHP_LSAPI_CHILDREN=10
   env                     LSAPI_AVOID_FORK=200M
   env                     LSPHP_ENABLE_USER_INI=on
-  env                     WORDPRESS_DB_HOST=db
-  env                     WORDPRESS_DB_NAME=wordpress
-  env                     WORDPRESS_DB_USER=wpuser
-  env                     WORDPRESS_DB_PASSWORD=b7HSuC5tJmF3haEDLpGMjn
+  env                     WORDPRESS_DB_HOST=$WP_DB_HOST
+  env                     WORDPRESS_DB_NAME=$WP_DB_NAME
+  env                     WORDPRESS_DB_USER=$WP_DB_USER
+  env                     WORDPRESS_DB_PASSWORD=$WP_DB_PASSWORD
   initTimeout             60
   retryTimeout            0
   persistConn             1
@@ -194,13 +194,19 @@ nodeDefaults  {
 
 module cache {
   internal                1
-checkPrivateCache      1
-checkPublicCache       1
-maxCacheObjSize        10000000
-maxStaleAge            86400
-enableCache            0
-expireInSeconds        86400
-enablePrivateCache     0
+heckPrivateCache   1
+checkPublicCache    1
+maxCacheObjSize     10000000
+maxStaleAge         200
+qsCache             1
+reqCookieCache      1
+respCookieCache     1
+ignoreReqCacheCtrl  1
+ignoreRespCacheCtrl 0
+
+enableCache         0
+expireInSeconds     3600
+enablePrivateCache  0
 privateExpireInSeconds 3600
   ls_enabled              1
 }
