@@ -1,16 +1,34 @@
 setuidmode 2
-enablescript 1
 restrained 1
-allowsymbollink 1
 configfile $SERVER_ROOT/conf/vhosts/$VH_NAME/vhconf.conf
+allowsymbollink 1
+enablescript 1
 vhroot /var/www/vhosts/$VH_NAME/
 
 virtualhostconfig  {
     docroot $VH_ROOT/html/
     enablegzip 1
 
-    expires  {
-        enableexpires 1
+    accesscontrol  {
+        allow *
+    }
+
+    errorlog  {
+        useserver 1
+    }
+
+    index  {
+        autoindex 0
+        autoindexuri /_autoindex/default.php
+        useserver 0
+        indexfiles index.html, index.php
+    }
+
+    accesslog $SERVER_ROOT/logs/$VH_NAME.access.log {
+        useserver 0
+        rollingsize 100M
+        keepdays 7
+        compressarchive 1
     }
 
     rewrite  {
@@ -19,20 +37,13 @@ virtualhostconfig  {
         loglevel 0
     }
 
-    index  {
-        autoindexuri /_autoindex/default.php
-        useserver 0
-        indexfiles index.html, index.php
-        autoindex 0
-    }
-
-    accesscontrol  {
-        allow *
+    expires  {
+        enableexpires 1
     }
 
     context / {
-        allowbrowse 1
         location $DOC_ROOT/
+        allowbrowse 1
 
         rewrite  {
             unknownkeywords rewritefile .htaccess
@@ -40,20 +51,9 @@ virtualhostconfig  {
         }
     }
 
-    errorlog  {
-        useserver 1
-    }
-
-    accesslog $SERVER_ROOT/logs/$VH_NAME.access.log {
-        rollingsize 100M
-        useserver 0
-        keepdays 7
-        compressarchive 1
-    }
-
     vhssl  {
+        keyfile /root/.acme.sh/certs/$VH_NAME_ecc/$VH_NAME.key
         certfile /root/.acme.sh/certs/$VH_NAME_ecc/fullchain.cer
         certchain 1
-        keyfile /root/.acme.sh/certs/$VH_NAME_ecc/$VH_NAME.key
     }
 }

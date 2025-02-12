@@ -3,7 +3,7 @@ services:
     image: mysql:8.0
     container_name: ${PROJECT_NAME}-db
     ports:
-      - "127.0.0.1:3381:3306"
+      - "127.0.0.1:33${PORT}:3306"
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: ${WP_DB_NAME}
@@ -20,9 +20,9 @@ services:
     platform: linux/amd64
     container_name: ${PROJECT_NAME}-ols
     ports:
-      - "127.0.0.1:81:80"       # HTTP
-      - "127.0.0.1:8143:443"      # HTTPS
-      - "7081:7080"  # LS-WEBADMIN
+      - "127.0.0.1:${PORT}:80"       # HTTP
+      - "127.0.0.1:${PORT}43:443"      # HTTPS
+      - "70${PORT}:7080"  # LS-WEBADMIN
     volumes:
       - ./wordpress:/var/www/vhosts/localhost/html
       - ./conf:/usr/local/lsws/conf      # Konfigurasi OpenLiteSpeed
@@ -36,7 +36,7 @@ services:
     image: redis:latest
     container_name: ${PROJECT_NAME}-redis
     ports:
-      - "127.0.0.1:6381:6379"
+      - "127.0.0.1:63${PORT}:6379"
     command: redis-server --save 60 1 --loglevel warning
     volumes:
       - ./redis:/data
@@ -48,7 +48,7 @@ services:
     container_name: ${PROJECT_NAME}-adminer
     restart: always
     ports:
-      - 127.0.0.1:8981:8080
+      - 127.0.0.1:89${PORT}:8080
     networks:
       - ${PROJECT_NAME}-bridge
 
