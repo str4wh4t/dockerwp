@@ -1,0 +1,59 @@
+setuidmode 2
+configfile $SERVER_ROOT/conf/vhosts/$VH_NAME/vhconf.conf
+restrained 1
+vhroot /var/www/vhosts/$VH_NAME/
+allowsymbollink 1
+enablescript 1
+
+virtualhostconfig  {
+    docroot $VH_ROOT/html/
+    enablegzip 1
+
+    index  {
+        useserver 0
+        indexfiles index.html, index.php
+        autoindex 0
+        autoindexuri /_autoindex/default.php
+    }
+
+    accesscontrol  {
+        allow *
+    }
+
+    accesslog $SERVER_ROOT/logs/$VH_NAME.access.log {
+        compressarchive 1
+        rollingsize 100M
+        keepdays 7
+        useserver 0
+    }
+
+    context / {
+        location $DOC_ROOT/
+        allowbrowse 1
+
+        rewrite  {
+            unknownkeywords rewritefile .htaccess
+            rules rewritefile .htaccess
+        }
+    }
+
+    vhssl  {
+        keyfile /root/.acme.sh/certs/$VH_NAME_ecc/$VH_NAME.key
+        certfile /root/.acme.sh/certs/$VH_NAME_ecc/fullchain.cer
+        certchain 1
+    }
+
+    errorlog  {
+        useserver 1
+    }
+
+    expires  {
+        enableexpires 1
+    }
+
+    rewrite  {
+        autoloadhtaccess 1
+        loglevel 0
+        enable 1
+    }
+}

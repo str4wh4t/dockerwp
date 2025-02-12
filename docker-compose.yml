@@ -1,0 +1,62 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: fpik-db
+    ports:
+      - "127.0.0.1:3381:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: b7HSuC5tJmF3haEDLpGMjn
+    command: --disable-log-bin
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      - fpik-bridge
+
+  ols:
+    image: litespeedtech/openlitespeed:latest
+    platform: linux/amd64
+    container_name: fpik-ols
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: b7HSuC5tJmF3haEDLpGMjn
+      WORDPRESS_DB_NAME: wordpress
+    ports:
+      - "127.0.0.1:81:80"       # HTTP
+      - "127.0.0.1:8143:443"      # HTTPS
+      - "7081:7080"  # LS-WEBADMIN
+    volumes:
+      - ./wordpress:/var/www/vhosts/localhost/html
+      - ./conf:/usr/local/lsws/conf      # Konfigurasi OpenLiteSpeed
+      - ./logs:/usr/local/lsws/logs      # Log OpenLiteSpeed
+    depends_on:
+      - db
+    networks:
+      - fpik-bridge
+
+  redis:
+    image: redis:latest
+    container_name: fpik-redis
+    ports:
+      - "127.0.0.1:6381:6379"
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - ./redis:/data
+    networks:
+      - fpik-bridge
+
+  adminer:
+    image: adminer
+    container_name: fpik-adminer
+    restart: always
+    ports:
+      - 127.0.0.1:8981:8080
+    networks:
+      - fpik-bridge
+
+networks:
+  fpik-bridge:
+    external: true

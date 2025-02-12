@@ -1,0 +1,56 @@
+docroot $VH_ROOT/html/
+vhdomain localhost, *
+enablegzip 1
+enablebr 1
+
+errorlog  {
+    useserver 1
+}
+
+accesslog $SERVER_ROOT/logs/$VH_NAME.access.log {
+    useserver 0
+    rollingsize 100M
+    keepdays 7
+    compressarchive 1
+}
+
+index  {
+    useserver 0
+    indexfiles index.html, index.php
+    autoindex 0
+    autoindexuri /_autoindex/default.php
+}
+
+expires  {
+    enableexpires 1
+}
+
+phpinioverride  {
+    php_value upload_max_filesize 2M
+}
+
+accesscontrol  {
+    allow *
+}
+
+context / {
+    location $DOC_ROOT/
+    allowbrowse 1
+
+    rewrite  {
+        rules rewritefile .htaccess
+        unknownkeywords rewritefile .htaccess
+    }
+}
+
+rewrite  {
+    enable 1
+    autoloadhtaccess 1
+    loglevel 0
+}
+
+vhssl  {
+    keyfile /root/.acme.sh/certs/$VH_NAME_ecc/$VH_NAME.key
+    certfile /root/.acme.sh/certs/$VH_NAME_ecc/fullchain.cer
+    certchain 1
+}
