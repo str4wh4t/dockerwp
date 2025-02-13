@@ -53,5 +53,5 @@ services:
       - ${PROJECT_NAME}-bridge
 
 networks:
-  fpik-bridge:
+  ${PROJECT_NAME}-bridge:
     external: true
