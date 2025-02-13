@@ -26,3 +26,6 @@ else
     docker network create "$NETWORK_NAME"
     echo "Docker network '$NETWORK_NAME' berhasil dibuat!"
 fi
+
+echo "Membuat docker-compose.yml"
+export $(grep -v '^#' .env | xargs) && envsubst < docker-compose.yml.template > docker-compose.yml
