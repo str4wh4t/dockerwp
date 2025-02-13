@@ -1,6 +1,13 @@
 # WPDOCKER
 ## By : MOCHAMAD IDRIS
 
+Powerfull Wordpress (WP) + DOCKER stack include :
+- mysql database
+- openlitespeed webserver
+- redis object cache
+- adminer
+
+
 Steps :
 1. prepare your .env file
 2. run : ./prepare.sh (root if needed)

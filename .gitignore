@@ -10,3 +10,4 @@ wordpress/wp-content/plugins/*/*
 wordpress/wp-content/uploads/*/*
 redis/*
 .env
+docker-compose.yml
