@@ -1,6 +1,6 @@
 <?php
 define( 'WP_CACHE', true );
-
+define('WP_POST_REVISIONS', 1);
 /**
  * The base configuration for WordPress
  *
